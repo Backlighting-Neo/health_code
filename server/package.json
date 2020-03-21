@@ -1,0 +1,27 @@
+{
+  "name": "qcs.fe.ops.flow.server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node ./src/index.ts"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.11.2",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@mtfe/hlb": "^0.4.3",
+    "@mtfe/sso-client": "^2.2.5",
+    "@mtfe/thrift": "^2.6.5",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-helmet": "^5.2.0",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^8.0.8",
+    "mss-sdk": "^2.0.0",
+    "mysql": "^2.18.1",
+    "typeorm": "^0.2.24"
+  }
+}
