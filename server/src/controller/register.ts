@@ -27,3 +27,17 @@ export const getFieldsByToken = async (ctx: Context) => {
     nullable: it.nullable
   }))
 }
+
+export const submit = async (ctx: Context) => {
+  const token = ctx.query.token as string;
+  if (!token) throw new BussinessError(101);
+
+  if (!UUID_REGEXP.test(token)) throw new BussinessError(102);
+
+  const connection = getConnection();
+  const qrcodeRepo = await connection.getRepository(Qrcode);
+  const qrcodeEntity = await qrcodeRepo.findOne(token);
+  if (!qrcodeEntity) throw new BussinessError(103);
+
+  const body = ctx.request.body;
+}

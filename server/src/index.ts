@@ -1,6 +1,7 @@
 import Koa from 'koa';
 import logger from 'koa-logger';
 import helmet from 'koa-helmet';
+import bodyParser from 'koa-bodyparser';
 
 import * as db from './db';
 import router from './router';
@@ -14,6 +15,7 @@ async function main() {
   app.use(logger());
   app.use(helmet());
   app.use(errorCatcher());
+  app.use(bodyParser());
   app.use(router.routes());
   app.use(router.allowedMethods());
 
