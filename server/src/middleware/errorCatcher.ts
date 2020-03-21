@@ -1,19 +1,27 @@
 import { Context } from 'koa';
-import errorMap from '../errorMap';
+import { BussinessError } from '../controller/common';
 
 export default () => async (ctx: Context, next: Function) => {
   try {
     await next();
+
+    ctx.body = {
+      code: 0,
+      data: ctx.body
+    };
   }
   catch(err) {
-    ctx.body = {
-      code: 999,
-      message: '未知错误',
-      error: err.message
+    if(err instanceof BussinessError) {
+      ctx.body = {
+        code: err.errorId,
+        message: err.errorMessage
+      };
     }
-  }
-
-  if(ctx.body && ctx.body.code && ctx.body.code !== 0) {
-    ctx.body.message = errorMap[ctx.body.code];
+    else {
+      ctx.body = {
+        code: 999,
+        message: err.message
+      }
+    }
   }
 }

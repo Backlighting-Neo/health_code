@@ -49,9 +49,9 @@
   .container {
     width: 100vw;
     height: 100vh;
-    background-color: black;
 
     .el-header {
+      background-color: #1a1a1a;
       padding: 0;
 
       .logo {
@@ -61,9 +61,9 @@
         padding: 2px 5px;
         vertical-align: middle;
         font-size: 18px;
-        color: rgb(0, 193, 222);
+        color: white;
         border-radius: 10px;
-        letter-spacing: 3px;
+        letter-spacing: 2px;
         text-shadow: 2px 2px 8px rgba(255,255,255,0.3);
 
         span {
