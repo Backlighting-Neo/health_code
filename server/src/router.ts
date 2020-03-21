@@ -1,10 +1,11 @@
 import Router from 'koa-router';
-import { getProjectGroupByMis } from './controller/register';
+import { getFieldsByToken } from './controller/register';
 
 const router = new Router({
   prefix: '/api',
 });
 
-router.get('/project/my', getProjectGroupByMis);
+router.get('/user/fields', getFieldsByToken);
+router.put('/user/submit', getFieldsByToken);
 
 export default router;
