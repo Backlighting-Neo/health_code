@@ -4,6 +4,7 @@ import helmet from 'koa-helmet';
 
 import * as db from './db';
 import router from './router';
+import errorCatcher from './middleware/errorCatcher';
 
 async function main() {
   await db.connection();
@@ -12,6 +13,7 @@ async function main() {
 
   app.use(logger());
   app.use(helmet());
+  app.use(errorCatcher());
   app.use(router.routes());
   app.use(router.allowedMethods());
 

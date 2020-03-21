@@ -1,5 +1,5 @@
 import Router from 'koa-router';
-import { getProjectGroupByMis } from './controller/project_group';
+import { getProjectGroupByMis } from './controller/register';
 
 const router = new Router({
   prefix: '/api',
