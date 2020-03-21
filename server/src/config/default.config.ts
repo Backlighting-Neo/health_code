@@ -1,11 +1,11 @@
 export default {
   database: {
     type: 'mysql',
-    host: '10.48.41.108',
-    port: 5002,
-    username: 'ops_flow',
-    password: 'UcVQv08Ta3pZsC',
-    database: 'ops_flow',
+    host: 'localhost',
+    port: 3306,
+    username: 'root',
+    password: '12345678',
+    database: 'health_code',
     synchronize: true,
   }
 }
