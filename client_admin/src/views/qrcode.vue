@@ -1,9 +1,13 @@
 <template>
   <div class="container">
+    <page-header>
+      二维码管理
+      <el-button slot="operation" type="primary">新建二维码</el-button>
+    </page-header>
     <el-table :data="data" border stripe style="width: 100%">
       <el-table-column label="ID" min-width="50px">
         <template slot-scope="{row}">
-          {{row.id.slice(0, 4)}}
+          {{row.id.slice(0, 6)}}
         </template>
       </el-table-column>
       <el-table-column prop="name" label="名称" min-width="100px" />
@@ -23,8 +27,8 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog :title="dialog.qrcodeTitle" :visible.sync="dialog.qrcode" width="350px">
-      <qrcode :text="dialog.qrcodeUrl" :size="300" :margin="0" />
+    <el-dialog :title="qrcode.title" :visible.sync="dialog.qrcode" width="350px">
+      <qrcode :text="qrcode.url" :size="300" :margin="0" />
     </el-dialog>
 
     <el-dialog title="编辑二维码" :visible.sync="dialog.update" width="650px">
@@ -46,6 +50,7 @@
 import axios from 'axios';
 import moment from 'moment';
 import qrcode from 'vue-qr';
+import * as common from './common';
 
 export default {
   name: 'qrcode_display',
@@ -85,7 +90,7 @@ export default {
       const { data } = await axios.get('/api/admin/field/all');
       this.fields = data.data.map(it => ({
         key: `${it.id}`,
-        label: it.name
+        label: `${it.name}(${it.key})`
       }));
     },
 
@@ -104,9 +109,7 @@ export default {
       
     },
 
-    timeFormatter({ value }) {
-      return moment(value).format('MM-DD HH:mm:SS');
-    }
+    timeFormatter: common.timeFormatter
   },
 
   created() {

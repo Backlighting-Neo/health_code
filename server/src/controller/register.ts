@@ -20,14 +20,22 @@ export const getFieldsByToken = async (ctx: Context) => {
   const fieldEntity = await fieldRepo.find({
     id: In(qrcodeEntity.fieldIds)
   });
-  return ctx.body = fieldEntity.map(it => ({
-    id: it.id,
-    key: it.key,
-    name: it.name,
-    content: it.content,
-    dataType: it.dataType,
-    nullable: it.nullable
-  }));
+  return ctx.body = {
+    qrcode: {
+      id: qrcodeEntity.id,
+      name: qrcodeEntity.name,
+      content: qrcodeEntity.content
+    },
+    fields: fieldEntity.map(it => ({
+      id: it.id,
+      key: it.key,
+      name: it.name,
+      content: it.content || '',
+      extra: it.extra || {},
+      dataType: it.dataType,
+      nullable: it.nullable
+    }))
+  }
 }
 
 export const submit = async (ctx: Context) => {
@@ -59,7 +67,5 @@ export const submit = async (ctx: Context) => {
     content: body
   });
 
-  ctx.body = {
-    id: result.identifiers
-  };
+  return ctx.body = result.identifiers[0];
 }

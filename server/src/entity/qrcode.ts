@@ -3,7 +3,8 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  Index
 } from "typeorm";
 
 @Entity('health_code_qrcode')
@@ -11,6 +12,7 @@ export class Qrcode {
   @PrimaryGeneratedColumn('uuid', { comment: '二维码编号' })
   id: string;
 
+  @Index({unique: true})
   @Column({ comment: '名字' })
   name: string;
 
