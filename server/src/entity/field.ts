@@ -1,16 +1,18 @@
 import {
   Entity,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  Index
 } from "typeorm";
 
 @Entity('health_code_field')
 export class Field {
-  @PrimaryColumn({ comment: '自增编号' })
-  id: string;
+  @PrimaryGeneratedColumn({ comment: '自增编号' })
+  id: number;
 
+  @Index({ unique: true })
   @Column({ comment: '键值' })
   key: string;
 
@@ -22,6 +24,9 @@ export class Field {
 
   @Column({ comment: '数据类型' })
   dataType: string;
+
+  @Column('json', { comment: '附加数据', default: null })
+  extra: any;
 
   @Column({ comment: '是否允许空', default: true })
   nullable: Boolean;

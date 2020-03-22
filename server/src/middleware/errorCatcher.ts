@@ -5,10 +5,12 @@ export default () => async (ctx: Context, next: Function) => {
   try {
     await next();
 
-    ctx.body = {
-      code: 0,
-      data: ctx.body
-    };
+    if(ctx.body) {
+      ctx.body = {
+        code: 0,
+        data: ctx.body
+      };
+    }
   }
   catch(err) {
     if(err instanceof BussinessError) {

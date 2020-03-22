@@ -1,6 +1,6 @@
 import {
   Entity,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   Column,
   Index,
   CreateDateColumn,
@@ -9,8 +9,8 @@ import {
 
 @Entity('health_code_administrator')
 export class Administrator {
-  @PrimaryColumn({ comment: '自增编号' })
-  id: string;
+  @PrimaryGeneratedColumn({ comment: '自增编号' })
+  id: number;
 
   @Index()
   @Column({ comment: '账号' })

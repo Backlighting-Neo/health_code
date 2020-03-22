@@ -1,14 +1,14 @@
 import {
   Entity,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn
 } from "typeorm";
 
-@Entity('health_code_regsitre')
+@Entity('health_code_regsiter')
 export class Register {
-  @PrimaryColumn({ comment: '自增编号' })
-  id: string;
+  @PrimaryGeneratedColumn({ comment: '自增编号' })
+  id: number;
 
   @Column({ comment: '二维码编号' })
   qrcodeId: string;
