@@ -2,7 +2,7 @@
   <div class="container">
     <page-header>
       二维码管理
-      <el-button slot="operation" type="primary">新建二维码</el-button>
+      <el-button slot="operation" type="primary" @click="create">新建二维码</el-button>
     </page-header>
     <el-table :data="data" border stripe style="width: 100%">
       <el-table-column label="ID" min-width="50px">
@@ -41,14 +41,13 @@
         </el-form-item>
         <el-transfer v-model="update.fieldIds" :data="fields" :titles="['可用字段', '已选字段']" />
       </el-form>
-      <el-button slot="footer" type="primary" @click="submitUpdate">确定</el-button>
+      <el-button slot="footer" type="primary" @click="submit">确定</el-button>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import moment from 'moment';
 import qrcode from 'vue-qr';
 import * as common from './common';
 
@@ -105,8 +104,41 @@ export default {
       this.dialog.update = true;
     },
 
-    submitUpdate() {
-      
+    create() {
+      this.update = {
+        id: '',
+        name: '',
+        content: '',
+        fieldIds: []
+      };
+      this.dialog.update = true;
+    },
+
+    async submit() {
+      if (!this.update.name) {
+        return this.$notify.error('名字不能为空');
+      }
+      if (!this.update.content) {
+        return this.$notify.error('描述不能为空');
+      }
+      if (!this.update.fieldIds.length === 0) {
+        return this.$notify.error('至少要有一个字段');
+      }
+
+      if (!this.update.id) {
+        const { data } = await axios.put('/api/admin/qrcode/new', {
+          name: this.update.name,
+          content: this.update.content,
+          fieldIds: this.update.fieldIds
+        });
+        this.dialog.update = false;
+        this.$notify.success('添加成功');
+        this.qrcodeDetail(data.data.id, this.update.name);
+      } else {
+        // TODO
+      }
+
+      return this.getAllQrcode();
     },
 
     timeFormatter: common.timeFormatter

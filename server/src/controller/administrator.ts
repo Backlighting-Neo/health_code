@@ -37,7 +37,7 @@ export const listQrcode = async (ctx: Context) => {
   }, {})
   return ctx.body = qrcodeEntity.map(it => ({
     ...it,
-    count: registerCountMap[it.id],
+    count: registerCountMap[it.id] || 0,
     field: it.fieldIds.map(it => fieldMap[it])
   })) || [];
 }
