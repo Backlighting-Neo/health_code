@@ -10,7 +10,7 @@
         v-if="item.dataType === 'input'"
         v-model="submitData[item.key]"
         :label="item.name"
-        :required="item.nullable"
+        :required="!item.nullable"
         v-bind="item.extra"
         label-width="130"
       />
@@ -20,7 +20,7 @@
         :key="'calendar-field' + item.id"
         :value="submitData[item.key] | formatDate"
         :label="item.name"
-        :required="item.nullable"
+        :required="!item.nullable"
         v-bind="item.extra"
         label-width="130"
         name="calendar"
@@ -32,6 +32,7 @@
         v-if="item.dataType === 'calendar'" 
         :key="'calendar-calendar' + item.id"
         v-model="showCalendar"
+        color="#07c160"
         @confirm="selectDate($event, item.key)"
       />
       
@@ -40,7 +41,7 @@
         :key="'radio-field' + item.id"
         :value="item | formatRadioText(submitData[item.key])"
         :label="item.name"
-        :required="item.nullable"
+        :required="!item.nullable"
         v-bind="item.extra"
         label-width="130"
         name="radio"
@@ -67,7 +68,7 @@
         :key="'checkbox-field' + item.id"
         :value="item | formatCheckboxText(submitData[item.key])"
         :label="item.name"
-        :required="item.nullable"
+        :required="!item.nullable"
         v-bind="item.extra"
         label-width="130"
         name="radio"
@@ -94,6 +95,8 @@
       </van-popup> 
 
     </template>
+
+    <van-button type="primary" @click="submit" class="submit-btn">提交</van-button>
   </div>
 </template>
 
@@ -165,6 +168,12 @@ export default {
     selectRadio(value, key) {
       this.submitData[key] = value;
       this.showRadioPop = false;
+    },
+
+    submit() {
+      axios.put(`/api/user/submit?token=${token}`, this.submitData).then(() => {
+        this.$toast.success('提交成功，感谢您的配合');
+      });
     }
   },
   created() {
@@ -192,5 +201,12 @@ export default {
     border: none;
     height: 50px;
     width: 100%;
+  }
+  .submit-btn {
+    width: 250px;
+    margin: 40px 0 40px -125px;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
   }
 </style>
