@@ -93,7 +93,7 @@ export default {
 
     qrcodeDetail(id, title) {
       this.qrcode.title = title;
-      this.qrcode.url = `${location.protocol}://${location.host}/?token=${id}`;
+      this.qrcode.url = `${location.protocol}://${location.host}/#/?token=${id}`;
       this.dialog.qrcode = true;
     },
 

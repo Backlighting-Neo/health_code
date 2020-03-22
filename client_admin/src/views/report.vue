@@ -92,7 +92,7 @@ export default {
 
     async getAllRegister() {
       const params = {};
-      if (this.search.range.length > 0) {
+      if (this.search.range && this.search.range.length > 0) {
         params.start = +this.search.range[0];
         params.end = +this.search.range[1];
       }

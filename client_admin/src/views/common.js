@@ -1,6 +1,7 @@
 import moment from 'moment';
 
 export const timeFormatter = (_row, _col, value) => {
+  if (!value) return '-';
   return moment(value).format('MM-DD HH:mm:SS');
 };
 
