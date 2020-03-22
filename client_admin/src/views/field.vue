@@ -15,11 +15,18 @@
       <el-table-column prop="content" label="备注" />
       <el-table-column label="操作" fixed="right">
         <template>
-          <el-button type="text">修改</el-button>
+          <el-button type="text" @click="handleUpdate">修改</el-button>
         </template>
       </el-table-column>
     </el-table>
-    
+
+    <el-dialog :title="`${update.id === '' ? '新建' : '修改'}字段`" :visible.sync="dialog.update" width="550px">
+      <el-form label-width="60px">
+        <el-form-item label="键值">
+          <el-input v-model="update.name" />
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -36,7 +43,10 @@ export default {
   data() {
     return {
       data: [],
-      update: {}
+      update: {},
+      dialog: {
+        update: false
+      }
     };
   },
 
