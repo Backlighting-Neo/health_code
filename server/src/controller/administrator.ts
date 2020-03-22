@@ -103,6 +103,23 @@ export const addField = async (ctx: Context) => {
   return ctx.body = result.identifiers[0]
 }
 
+export const updateField = async (ctx: Context) => {
+  const id = ctx.query.id;
+  const body = ctx.request.body;
+
+  const connection = getConnection();
+  const fieldRepo = connection.getRepository(Field);
+
+  await fieldRepo.update(id, {
+    name: body.name,
+    content: body.content,
+    dataType: body.dataType,
+    nullable: body.nullable,
+    extra: body.extra
+  });
+  return ctx.body = {};
+}
+
 export const listRegister = async (ctx: Context) => {
   const { start, end, qrcode } = ctx.query;
   
