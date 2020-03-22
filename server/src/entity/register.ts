@@ -14,7 +14,9 @@ export class Register {
   qrcodeId: string;
 
   @Column('json', { comment: '填写内容' })
-  
+  content: {
+    [key: string]: any
+  };
 
   @CreateDateColumn({ comment: '创建时间' })
   create_time: Date;

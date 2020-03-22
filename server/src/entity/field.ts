@@ -11,6 +11,9 @@ export class Field {
   @PrimaryColumn({ comment: '自增编号' })
   id: string;
 
+  @Column({ comment: '键值' })
+  key: string;
+
   @Column({ comment: '名字' })
   name: string;
 

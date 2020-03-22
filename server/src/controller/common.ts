@@ -8,12 +8,13 @@ export class BussinessError extends Error {
     101: '缺少token参数',
     102: 'token不合法',
     103: '二维码不存在',
+    104: '必填项未填写',
   }
   
-  constructor(errorId) {
+  constructor(errorId, errorMessage = null) {
     super();
     this.errorId = errorId;
-    this.errorMessage = BussinessError.ErrorMap[errorId];
+    this.errorMessage = errorMessage || BussinessError.ErrorMap[errorId];
     if(!this.errorMessage) {
       throw new Error(`Can not find error with id=${errorId}`);
     }
