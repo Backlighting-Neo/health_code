@@ -20,11 +20,11 @@
           text-color="rgba(0,0,0,.84)"
           active-text-color="rgba(0,0,0,.84)">
           <el-menu-item index="/report">
-            <i class="el-icon-setting"></i>
+            <i class="el-icon-s-order"></i>
             <span slot="title">数据报表</span>
           </el-menu-item>
           <el-menu-item index="/qrcode">
-            <i class="el-icon-setting"></i>
+            <i class="el-icon-menu"></i>
             <span slot="title">二维码管理</span>
           </el-menu-item>
           <el-menu-item index="/field">

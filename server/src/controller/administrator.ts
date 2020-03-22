@@ -65,7 +65,20 @@ export const addQrcode = async (ctx: Context) => {
   return ctx.body = result.identifiers[0];
 }
 
+export const updateQrcode = async (ctx: Context) => {
+  const token = ctx.query.token;
+  const body = ctx.request.body;
 
+  const connection = getConnection();
+  const qrcodeRepo = connection.getRepository(Qrcode);
+
+  await qrcodeRepo.update(token, {
+    name: body.name,
+    content: body.content,
+    fieldIds: body.fieldIds
+  });
+  return ctx.body = {};
+}
 
 export const listField = async (ctx: Context) => {
   const connection = getConnection();

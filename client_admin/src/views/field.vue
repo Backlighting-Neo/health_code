@@ -8,17 +8,18 @@
       <el-table-column prop="id" label="ID" min-width="50px" fixed="left" />
       <el-table-column prop="key" label="键值" fixed="left" />
       <el-table-column prop="name" label="名字" min-width="100px" />
-      <el-table-column prop="content" label="备注" />
       <el-table-column prop="dataType" label="数据类型" :formatter="dataTypeFormatter" />
-      <el-table-column prop="nullable" label="允许空" />
+      <el-table-column prop="nullable" label="必填" :formatter="nullableFormatter" width="60px" />
       <el-table-column prop="create_time" label="创建时间" min-width="100px" :formatter="timeFormatter" />
       <el-table-column prop="update_time" label="修改时间" min-width="100px" :formatter="timeFormatter" />
+      <el-table-column prop="content" label="备注" />
       <el-table-column label="操作" fixed="right">
         <template>
           <el-button type="text">修改</el-button>
         </template>
       </el-table-column>
     </el-table>
+    
   </div>
 </template>
 
@@ -34,7 +35,8 @@ export default {
 
   data() {
     return {
-      data: []
+      data: [],
+      update: {}
     };
   },
 
@@ -46,8 +48,12 @@ export default {
 
     timeFormatter: common.timeFormatter,
 
-    dataTypeFormatter({dataType: value}) {
+    dataTypeFormatter(_row, _col, value) {
       return common.DataTypeEnum[value] || value;
+    },
+
+    nullableFormatter(_row, _col, value) {
+      return value ? '否' : '是';
     }
   },
 

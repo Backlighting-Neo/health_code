@@ -1,8 +1,7 @@
 import moment from 'moment';
 
-export const timeFormatter = (a) => {
-  console.log(a.value);
-  return moment(a.value).format('MM-DD HH:mm:SS');
+export const timeFormatter = (_row, _col, value) => {
+  return moment(value).format('MM-DD HH:mm:SS');
 };
 
 export const DataTypeEnum = {

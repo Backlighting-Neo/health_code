@@ -7,31 +7,29 @@
     <el-table :data="data" border stripe style="width: 100%">
       <el-table-column label="ID" min-width="50px">
         <template slot-scope="{row}">
-          {{row.id.slice(0, 6)}}
+          {{row.id.slice(0, 8)}}
         </template>
       </el-table-column>
       <el-table-column prop="name" label="名称" min-width="100px" />
       <el-table-column prop="content" label="备注" min-width="100px" />
-      <el-table-column label="二维码" min-width="60px">
-        <template slot-scope="{row}">
-          <el-button type="text" @click="qrcodeDetail(row.id, row.name)">点击查看</el-button>
-        </template>
-      </el-table-column>
       <el-table-column prop="count" label="填写数量" />
       <el-table-column prop="create_time" label="创建时间" :formatter="timeFormatter" />
       <el-table-column prop="update_time" label="修改时间" :formatter="timeFormatter" />
       <el-table-column label="操作" min-width="60px">
         <template slot-scope="{row}">
+          <el-button type="text" @click="qrcodeDetail(row.id, row.name)">二维码</el-button>
           <el-button type="text" @click="handleUpdate(row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <el-dialog :title="qrcode.title" :visible.sync="dialog.qrcode" width="350px">
+      <el-alert :closable="false">在图片上右键选择“图片存储为”即可下载</el-alert>
+      <br/>
       <qrcode :text="qrcode.url" :size="300" :margin="0" />
     </el-dialog>
 
-    <el-dialog title="编辑二维码" :visible.sync="dialog.update" width="650px">
+    <el-dialog :title="`${update.id === '' ? '新建' : '修改'}二维码`" :visible.sync="dialog.update" width="650px">
       <el-form label-width="60px">
         <el-form-item label="名称">
           <el-input v-model="update.name" />
@@ -131,13 +129,18 @@ export default {
           content: this.update.content,
           fieldIds: this.update.fieldIds
         });
-        this.dialog.update = false;
         this.$notify.success('添加成功');
         this.qrcodeDetail(data.data.id, this.update.name);
       } else {
-        // TODO
+        await axios.post(`/api/admin/qrcode/update?token=${this.update.id}`, {
+          name: this.update.name,
+          content: this.update.content,
+          fieldIds: this.update.fieldIds
+        });
+        this.$notify.success('修改成功');
       }
 
+      this.dialog.update = false;
       return this.getAllQrcode();
     },
 

@@ -38,6 +38,7 @@
         :key="col.key"
         :prop="col.key"
         :label="col.name"
+        :formatter="dataTypeTransformer[col.dataType]"
       />
     </el-table>
   </div>
@@ -109,7 +110,12 @@ export default {
         it.id,
         it.qrcode,
         it.register_time,
-        ...this.tableFields.map(field => it[field.key])
+        ...this.tableFields.map(field => {
+          const value = it[field.key];
+          const col = field.key;
+          const dataType = field.dataType;
+          return this.dataTypeTransformer[dataType](null, { property: col }, value);
+        })
       ]);
       const buffer = xlsx.build([{
         name: '数据报表',
@@ -128,6 +134,23 @@ export default {
     this.getAllQrcode();
     this.getAllFiedls();
     this.getAllRegister();
+
+    this.dataTypeTransformer = {
+      input: (_row, _col, value) => value || '-',
+      calendar: common.timeFormatter,
+      radio: (_row, col, value) => {
+        if (!value) return '-';
+        const colName = col.property;
+        const field = this.fields.find(it => it.key === colName);
+        return field.extra.options.find(it => it.value === value).name;
+      },
+      checkbox: (_row, col, value) => {
+        if (!value) return '-';
+        const colName = col.property;
+        const field = this.fields.find(it => it.key === colName);
+        return field.extra.options.filter(it => value.includes(it.value)).map(it => it.name).join(', ');
+      },
+    };
   }
 };
 </script>
