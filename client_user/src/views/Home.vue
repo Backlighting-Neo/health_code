@@ -18,7 +18,7 @@
       <van-field
         v-if="item.dataType === 'calendar'"
         :key="'calendar-field' + item.id"
-        :value="submitData[item.key]"
+        :value="submitData[item.key] | formatDate"
         :label="item.name"
         :required="item.nullable"
         v-bind="item.extra"
@@ -134,6 +134,10 @@ export default {
     };
   },
   filters: {
+    formatDate(date) {
+      if (!date) return;
+      return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+    },
     formatRadioText(item, value) {
       const selectOption = item.extra.options.find(it => it.value === value);
       return selectOption && selectOption.name;
@@ -154,7 +158,7 @@ export default {
       });
     },
     selectDate(date, key) {
-      this.submitData[key] = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+      this.submitData[key] = date;
       this.showCalendar = false;
     },
 
