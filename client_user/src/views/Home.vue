@@ -102,7 +102,9 @@
 
 <script>
 import axios from 'axios';
-const token = '8e48fc4a-7e5f-4c2c-8032-a03835ea0e78';
+
+// const token = '8e48fc4a-7e5f-4c2c-8032-a03835ea0e78';
+
 export default {
   name: 'home',
   components: {
@@ -153,7 +155,7 @@ export default {
   },  
   methods: {
     async getFields() {
-      const resData = await axios.get(`/api/user/fields?token=${token}`);
+      const resData = await axios.get(`/api/user/fields?token=${this.$route.query.token}`);
       this.qrcode = resData.qrcode;
       this.fields = resData.fields;
       resData.fields.forEach(it => {
@@ -171,7 +173,7 @@ export default {
     },
 
     submit() {
-      axios.put(`/api/user/submit?token=${token}`, this.submitData).then(() => {
+      axios.put(`/api/user/submit?token=${this.$route.query.token}`, this.submitData).then(() => {
         this.$toast.success('提交成功，感谢您的配合');
       });
     }
