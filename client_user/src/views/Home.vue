@@ -103,7 +103,6 @@
 <script>
 import axios from 'axios';
 
-// const token = '8e48fc4a-7e5f-4c2c-8032-a03835ea0e78';
 
 export default {
   name: 'home',
@@ -129,9 +128,7 @@ export default {
           }
         }
       ],
-      submitData: {
-        'real_name': '张三'
-      },
+      submitData: {},
 
       showCalendar: false,
       showRadioPop: false,
@@ -155,12 +152,17 @@ export default {
   },  
   methods: {
     async getFields() {
-      const resData = await axios.get(`/api/user/fields?token=${this.$route.query.token}`);
-      this.qrcode = resData.qrcode;
-      this.fields = resData.fields;
-      resData.fields.forEach(it => {
-        this.$set(this.submitData, it.key, it.dataType === 'checkbox' ? [] : '');
-      });
+      axios.get(`/api/user/fields?token=${this.$route.query.token}`)
+        .then(resData => {
+          this.qrcode = resData.qrcode;
+          this.fields = resData.fields;
+          resData.fields.forEach(it => {
+            this.$set(this.submitData, it.key, it.dataType === 'checkbox' ? [] : '');
+          });
+        })
+        .catch(err => {
+          this.$toast.fail(err.message);
+        });
     },
     selectDate(date, key) {
       this.submitData[key] = date;
@@ -173,9 +175,13 @@ export default {
     },
 
     submit() {
-      axios.put(`/api/user/submit?token=${this.$route.query.token}`, this.submitData).then(() => {
-        this.$toast.success('提交成功，感谢您的配合');
-      });
+      axios.put(`/api/user/submit?token=${this.$route.query.token}`, this.submitData)
+        .then(() => {
+          this.$toast.success('提交成功，感谢您的配合');
+        })
+        .catch(err => {
+          this.$toast.fail(err.message);
+        });
     }
   },
   created() {
