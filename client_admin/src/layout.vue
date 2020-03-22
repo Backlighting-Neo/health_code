@@ -1,11 +1,11 @@
 <template>
-  <el-container class="container">
+  <el-container class="wrapper_container">
     <el-header>
       <el-container>
         <el-aside width="200px">
           <div class="logo">
             <span class="icon iconfont icon-xtrace"></span>
-            <span>系统标题</span>
+            <span>追踪后台</span>
           </div>
         </el-aside>
       </el-container>
@@ -14,7 +14,7 @@
       <el-aside class="aside" width="200px">
         <el-menu
           router
-          default-active="/"
+          :default-active="$route.path"
           class="el-menu-vertical-demo"
           background-color="#f5f5f5"
           text-color="rgba(0,0,0,.84)"
@@ -46,7 +46,7 @@
     padding: 0;
   }
 
-  .container {
+  .wrapper_container {
     width: 100vw;
     height: 100vh;
 
