@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <van-divider>镜心学校出入统计</van-divider>
+    <van-divider>{{qrcode.name}}</van-divider>
     <div class="content">
       {{ qrcode.content }}
     </div>
