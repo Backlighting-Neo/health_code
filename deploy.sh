@@ -1,3 +1,6 @@
+cd server
+yarn
+cd ..
 pm2 kill
 pm2 start ts-node -- -P ./server/tsconfig.json ./server/src/index.ts
 
