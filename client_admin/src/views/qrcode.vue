@@ -19,6 +19,7 @@
         <template slot-scope="{row}">
           <el-button type="text" @click="qrcodeDetail(row.id, row.name)">二维码</el-button>
           <el-button type="text" @click="handleUpdate(row)">编辑</el-button>
+          <el-button type="text" @click="handleLink(row.id)">链接</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -95,6 +96,10 @@ export default {
       this.qrcode.title = title;
       this.qrcode.url = `${location.protocol}//${location.host}/#/?token=${id}`;
       this.dialog.qrcode = true;
+    },
+
+    handleLink(id) {
+      window.open(`${location.protocol}//${location.host}/#/?token=${id}`);
     },
 
     handleUpdate(row) {
