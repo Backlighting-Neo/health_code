@@ -31,6 +31,7 @@
       <van-calendar
         v-if="item.dataType === 'calendar'" 
         :key="'calendar-calendar' + item.id"
+        :min-date="new Date('2020-01-01')"
         v-model="showCalendar"
         color="#07c160"
         @confirm="selectDate($event, item.key)"
