@@ -1,10 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import report from '@/views/report.vue';
-import qrcode from '@/views/qrcode.vue';
-import field from '@/views/field.vue';
-
 Vue.use(VueRouter);
 
 const routes = [
@@ -13,13 +9,13 @@ const routes = [
     redirect: '/report'
   }, {
     path: '/report',
-    component: report
+    component: () => import('@/views/report.vue')
   }, {
     path: '/qrcode',
-    component: qrcode
+    component: () => import('@/views/qrcode.vue')
   }, {
     path: '/field',
-    component: field
+    component: () => import('@/views/field.vue')
   }
 ];
 
