@@ -21,6 +21,6 @@
     "moment": "^2.24.0",
     "mysql": "^2.18.1",
     "tsconfig-paths": "^3.9.0",
-    "typeorm": "^0.2.24"
+    "typeorm": "^0.2.25"
   }
 }
